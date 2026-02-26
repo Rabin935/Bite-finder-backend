@@ -1,18 +1,23 @@
 "use strict";
-require('dotenv').config();
+// @ts-nocheck
+const dotenv = require('dotenv');
+dotenv.config();
 const http = require('http');
 const app = require('./app');
-const connectDB = require('./config/db');
+const connectDB = require('./database/db');
 const PORT = process.env.PORT || 5000;
 const startServer = async () => {
-    await connectDB();
-    const server = http.createServer(app);
-    server.listen(PORT, () => {
-        console.log(`Bite Finder Backend running on port ${PORT}`);
-    });
+    try {
+        await connectDB();
+        const server = http.createServer(app);
+        server.listen(PORT, () => {
+            console.log(`Bite Finder Backend running on port ${PORT}`);
+        });
+    }
+    catch (error) {
+        console.error('Failed to start server:', error);
+        process.exit(1);
+    }
 };
-startServer().catch((error) => {
-    console.error('Failed to start server:', error);
-    process.exit(1);
-});
+startServer();
 //# sourceMappingURL=server.js.map

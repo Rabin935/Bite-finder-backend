@@ -1,4 +1,5 @@
 "use strict";
+// @ts-nocheck
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const userSchema = new mongoose.Schema({
@@ -21,8 +22,20 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['user', 'admin'],
+        enum: ['user', 'admin', 'owner'],
         default: 'user',
+    },
+    profileImage: {
+        type: String,
+        default: '',
+    },
+    resetPasswordToken: {
+        type: String,
+        default: null,
+    },
+    resetPasswordExpires: {
+        type: Date,
+        default: null,
     },
 }, { timestamps: { createdAt: true, updatedAt: true } });
 userSchema.methods.comparePassword = function comparePassword(candidatePassword) {

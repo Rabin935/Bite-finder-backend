@@ -1,4 +1,5 @@
 "use strict";
+// @ts-nocheck
 const mongoose = require('mongoose');
 const connectDB = async () => {
     try {
